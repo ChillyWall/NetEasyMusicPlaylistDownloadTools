@@ -108,11 +108,8 @@ class NetEasyPlaylistDownloader():
                 file_name = self.get_file_name(info)
             except:
                 print("There's something wrong with the song(id={0})".format(id))
-                error = {
-                    'name': id,
-                    'type': 'song_info'
-                }
-                self.errors.append(error)
+
+                self.errors.append(id)
                 continue
             
             song = {
@@ -333,27 +330,17 @@ class NetEasyPlaylistDownloader():
             self.download_file(pl_cov_url, pl_cov_out)
         except:
             print("Failed to download the cover picture of playlist")
-            error = {
-                'name': 'playlist_cover_pic',
-                'type': 'pl_cover_pic_dl'
-            }
-            self.errors.append(error)
+
+            self.errors.append('playlist cover')
 
         # 下载歌曲封面
         for song in songs:
             cover_url = song['info']['cover']
             suf = os.path.splitext(cover_url)[-1]
             cover_out = '{2}{0}/{0}{1}'.format(song['file_name'], suf, output_dir)
-            try:
-                print('Downloading the cover picture of the song ' + song['info']['title'])
-                self.download_file(cover_url, cover_out)
-            except:
-                print("Failed to download the cover picture of the song whose id is {0}".format(song['id']))
-                error = {
-                    'name': id,
-                    'type': 'song_cover_pic_dl'
-                }
-                self.errors.append(error)
+            print('Downloading the cover picture of the song ' + song['info']['title'])
+            self.download_file(cover_url, cover_out)
+
 
             time.sleep(1)
 
@@ -378,12 +365,8 @@ class NetEasyPlaylistDownloader():
                 print("There is no the url of the song named '{0}'".format(
                     song['info']['title']))
                 # 加入错误信息
-                error = {
-                    'name': id,
-                    'type': 'song_url_missed'
-                }
-                print(repr(e))
-                self.errors.append(error)
+
+                self.errors.append(id)
                 continue
 
             # 下载文件名
@@ -395,14 +378,10 @@ class NetEasyPlaylistDownloader():
             try:
                 print('Downloading the song ' + song['info']['title'])
                 self.download_file(media_url, out)
-            except Exception as e:
+            except :
                 print("Failed to download the song whose id is ".format(song['id']))
-                error = {
-                    'name': id,
-                    'type': 'song_dl'
-                }
-                print(repr(e))
-                self.errors.append(error)
+
+                self.errors.append(id)
             time.sleep(1)
 
     def download(self, slice: tuple = (None, None), output_dir: str = None, if_img: bool = True):
