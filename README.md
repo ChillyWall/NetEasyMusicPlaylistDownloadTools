@@ -12,7 +12,7 @@
 
 ```python
 # 外部调用, 确保导入正确
-from NetEasyMusicPlaylistDownloadTool import NetEasyDownloader as nd
+from NetEasyMusicPlaylistDownloadTools import NetEasyPlaylistDownloader as nd
 id = '7238513086'
 playlist = nd(id)
 playlist.get_playlist()

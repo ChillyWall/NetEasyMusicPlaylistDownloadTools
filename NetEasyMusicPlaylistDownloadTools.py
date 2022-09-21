@@ -378,8 +378,8 @@ class NetEasyPlaylistDownloader():
             try:
                 print('Downloading the song ' + song['info']['title'])
                 self.download_file(media_url, out)
-            except :
-                print("Failed to download the song whose id is ".format(song['id']))
+            except:
+                print("Failed to download the song whose id is {0}".format(song['id']))
 
                 self.errors.append(id)
             time.sleep(1)
